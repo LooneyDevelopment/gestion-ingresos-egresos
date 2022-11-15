@@ -20,11 +20,17 @@
                 </div>
             </div>
             <div class="col-8">
-                <h1 class="text-center text-info">Sistema de gestión de Ingresos y Gastos</h1>
-                <h2 class="border-bottom float-start border-dark pb-2">Empresas</h2>
-                <a href="empresas/nueva" class="btn btn-light float-end mt-5 text-success">Nueva</a>
-                <table class="table">
-                    <thead>
+                <div class="row pb-2">
+                    <h1 class="text-center text-info">Sistema de gestión de Ingresos y Gastos</h1>
+                    <div class="d-flex justify-content-between">
+                        <h2 class="border-bottom border-dark pb-1">Empresas</h2>
+                        <a href="empresas/nueva" class="btn btn-success text-center">Nueva empresa</a>
+                    </div>
+                </div>
+
+                <div class="row table-responsive">
+                    <table class="table" th:if="${enterprises.size()}">
+                        <thead>
                         <tr class="text-success">
                             <th scope="col">Nombre</th>
                             <th scope="col">Nit</th>
@@ -32,22 +38,26 @@
                             <th scope="col">Teléfono</th>
                             <th scope="col">Acciones</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         <tr th:each="empresa : ${enterprises}">
                             <td th:text="${empresa.name}"></td>
                             <td th:text="${empresa.document}"></td>
                             <td th:text="${empresa.address}"></td>
                             <td th:text="${empresa.phone}"></td>
-                            <td>
+                            <td class="btn-group btn-group-sm">
                                 <form class="form" th:method="DELETE" th:action="@{/empresas/{id}(id=${empresa.id})}">
                                     <button th:text="Eliminar" class="btn btn-outline-danger btn-sm"></button>
                                 </form>
                                 <a th:href="@{empresas/editar/} + ${empresa.id}" th:text="Editar" class="btn btn-outline-secondary btn-sm"></a>
                             </td>
                         </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:unless="${enterprises.size()}" class="alert alert-warning mt-5">
+                    <h2 class="text-center">No existen empresas disponibles en base de datos</h2>
+                </div>
             </div>
         </div>
     </div>

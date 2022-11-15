@@ -1,8 +1,8 @@
-package com.mintic.gestioningresosegresos.models.daos;
+package com.mintic.gestioningresosegresos.repositories;
 
 import com.mintic.gestioningresosegresos.models.entities.Enterprise;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IEnterpriseDao extends JpaRepository<Enterprise, Long> {
+public interface EnterpriseRepository extends JpaRepository<Enterprise, Long> {
     Enterprise findByDocument(String document);
 }

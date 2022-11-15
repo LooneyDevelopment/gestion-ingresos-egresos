@@ -1,9 +1,9 @@
-package com.mintic.gestioningresosegresos.models.servicesImpl;
+package com.mintic.gestioningresosegresos.servicesImpl;
 
-import com.mintic.gestioningresosegresos.models.daos.IUsuarioDao;
+import com.mintic.gestioningresosegresos.repositories.UsuarioRepository;
 import com.mintic.gestioningresosegresos.models.entities.Usuario;
 import com.mintic.gestioningresosegresos.models.enums.EnumRoleName;
-import com.mintic.gestioningresosegresos.models.services.IUsuarioService;
+import com.mintic.gestioningresosegresos.services.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
     @Autowired
-    IUsuarioDao usuarioDao;
+    UsuarioRepository usuarioDao;
 
     @Override
     public List<Usuario> findAll() {

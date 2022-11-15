@@ -1,7 +1,7 @@
 package com.mintic.gestioningresosegresos.controllers.frontend;
 
 import com.mintic.gestioningresosegresos.models.entities.Enterprise;
-import com.mintic.gestioningresosegresos.models.services.IEnterpriseService;
+import com.mintic.gestioningresosegresos.services.IEnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

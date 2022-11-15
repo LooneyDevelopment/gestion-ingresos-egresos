@@ -1,8 +1,8 @@
-package com.mintic.gestioningresosegresos.models.servicesImpl;
+package com.mintic.gestioningresosegresos.servicesImpl;
 
-import com.mintic.gestioningresosegresos.models.daos.IMovementDao;
+import com.mintic.gestioningresosegresos.repositories.MovementRepository;
 import com.mintic.gestioningresosegresos.models.entities.Movement;
-import com.mintic.gestioningresosegresos.models.services.IMovementService;
+import com.mintic.gestioningresosegresos.services.IMovementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class MovementServiceImpl implements IMovementService {
     @Autowired
-    IMovementDao movementDao;
+    MovementRepository movementDao;
 
     @Override
     public List<Movement> findAll() {

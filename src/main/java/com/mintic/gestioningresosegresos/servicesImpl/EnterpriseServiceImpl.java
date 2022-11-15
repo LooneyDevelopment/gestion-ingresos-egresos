@@ -1,8 +1,8 @@
-package com.mintic.gestioningresosegresos.models.servicesImpl;
+package com.mintic.gestioningresosegresos.servicesImpl;
 
-import com.mintic.gestioningresosegresos.models.daos.IEnterpriseDao;
+import com.mintic.gestioningresosegresos.repositories.EnterpriseRepository;
 import com.mintic.gestioningresosegresos.models.entities.Enterprise;
-import com.mintic.gestioningresosegresos.models.services.IEnterpriseService;
+import com.mintic.gestioningresosegresos.services.IEnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class EnterpriseServiceImpl implements IEnterpriseService {
     @Autowired
-    IEnterpriseDao enterpriseDao;
+    EnterpriseRepository enterpriseDao;
 
     @Override
     public List<Enterprise> findAll() {

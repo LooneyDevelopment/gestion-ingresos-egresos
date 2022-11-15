@@ -1,4 +1,4 @@
-package com.mintic.gestioningresosegresos.models.services;
+package com.mintic.gestioningresosegresos.services;
 
 import com.mintic.gestioningresosegresos.models.entities.Usuario;
 import org.springframework.data.domain.Page;

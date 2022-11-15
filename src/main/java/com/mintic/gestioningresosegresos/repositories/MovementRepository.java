@@ -1,7 +1,7 @@
-package com.mintic.gestioningresosegresos.models.daos;
+package com.mintic.gestioningresosegresos.repositories;
 
 import com.mintic.gestioningresosegresos.models.entities.Movement;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IMovementDao extends JpaRepository<Movement, Long> {
+public interface MovementRepository extends JpaRepository<Movement, Long> {
 }
