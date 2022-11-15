@@ -3,12 +3,14 @@ package com.mintic.gestioningresosegresos.controllers.frontend;
 import com.mintic.gestioningresosegresos.models.entities.Enterprise;
 import com.mintic.gestioningresosegresos.services.IEnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RequestMapping("empresas")
 @Controller
@@ -41,12 +43,22 @@ public class FrontEndEnterpriseController {
     }
 
     @PostMapping("nueva")
-    public String postUsuario(@ModelAttribute("empresa") Enterprise enterprise){
+    public String postUsuario(@ModelAttribute("empresa") Enterprise enterprise, Model model){
         enterprise.setCreatedAt(new Date());
         enterprise.setUpdatedAt(new Date());
         enterprise.setUsuarios(new ArrayList<>());
-        enterpriseService.save(enterprise);
-        return "redirect:/empresas";
+        try {
+            enterpriseService.save(enterprise);
+            return "redirect:/empresas";
+        } catch (DataAccessException e) {
+            List<String> partsOfError = List.of(e.getMostSpecificCause().getLocalizedMessage().split(":"));
+            String detail = partsOfError.get(2);
+            model.addAttribute("error", detail);
+            return "error";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getLocalizedMessage());
+            return "error";
+        }
     }
 
     @DeleteMapping("{id}")

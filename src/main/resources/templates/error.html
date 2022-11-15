@@ -7,7 +7,9 @@
       <div class="col-4 border-end border-success bg-light py-5">
         <div th:replace="layouts/base::lateral"></div>
       </div>
-      <div th:replace="layouts/base::form"></div>
+      <div class="col-8 border border-danger bg-light py-5">
+        <div th:replace="layouts/base::error"></div>
+      </div>
     </div>
   </div>
 </body>

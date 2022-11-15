@@ -46,5 +46,12 @@
             </form>
         </div>
     </div>
+    <div th:fragment="error" class="row text-center">
+        <h4 th:text="${error}"></h4>
+        <div class="container">
+            <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678069-sign-error-256.png" alt="">
+        </div>
+        <a th:href="@{/}" class="btn btn-warning">Volver</a>
+    </div>
 </body>
 </html>
