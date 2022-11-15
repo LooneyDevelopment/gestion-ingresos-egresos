@@ -19,6 +19,7 @@ public class Home {
         sistemas.add(new SistemaGestion("ingresos y gastos", "ingresos-gastos", "https://cdn2.iconfinder.com/data/icons/scenarium-vol-3-1/128/002_money_cash_gold_wealth_income_deposit_finance-128.png"));
 
         model.addAttribute("sistemas", sistemas);
+        model.addAttribute("title", "Home");
         return "home";
     }
 }

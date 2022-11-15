@@ -9,7 +9,9 @@
 <body>
     <div th:fragment="lateral" class="vstack gap-4 col-md-5 mx-auto">
         <figure>
-            <img src="https://cdn3.iconfinder.com/data/icons/start-up-4/44/money-128.png" alt="Logo">
+            <a href="/">
+                <img src="https://cdn3.iconfinder.com/data/icons/start-up-4/44/money-128.png" alt="Logo">
+            </a>
         </figure>
         <a th:href="@{/ingresos-gastos}" class="btn btn-secondary">Ingresos y egresos</a>
         <a th:href="@{/usuarios}" class="btn btn-secondary">Usuarios</a>
@@ -43,6 +45,13 @@
                 <button class="btn btn-success mt-3" th:text="${accion}"></button>
             </form>
         </div>
+    </div>
+    <div th:fragment="error" class="row text-center">
+        <h4 th:text="${error}"></h4>
+        <div class="container">
+            <img src="https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678069-sign-error-256.png" alt="">
+        </div>
+        <a th:href="@{/}" class="btn btn-warning">Volver</a>
     </div>
 </body>
 </html>
