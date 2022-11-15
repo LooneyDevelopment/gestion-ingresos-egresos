@@ -11,40 +11,42 @@
                 <div class="row pb-2">
                     <h1 class="text-center text-info">Sistema de gestión de Ingresos y Gastos</h1>
                     <div class="d-flex justify-content-between">
-                        <h2 class="border-bottom border-dark pb-1">Empresas</h2>
-                        <a href="empresas/nueva" class="btn btn-success text-center">Nueva empresa</a>
+                        <h2 class="border-bottom border-dark pb-1">Usuarios</h2>
+                        <a href="usuarios/nuevo" class="btn btn-success text-center">Nuevo usuario</a>
                     </div>
                 </div>
 
                 <div class="row table-responsive">
-                    <table class="table" th:if="${enterprises.size()}">
+                    <table class="table" th:if="${usuarios.size()}">
                         <thead>
                         <tr class="text-success">
                             <th scope="col">Nombre</th>
-                            <th scope="col">Nit</th>
-                            <th scope="col">Dirección</th>
-                            <th scope="col">Teléfono</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Roles</th>
+                            <th scope="col">Fecha creación</th>
                             <th scope="col">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="empresa : ${enterprises}">
-                            <td th:text="${empresa.name}"></td>
-                            <td th:text="${empresa.document}"></td>
-                            <td th:text="${empresa.address}"></td>
-                            <td th:text="${empresa.phone}"></td>
+                        <tr th:each="usuario : ${usuarios}">
+                            <td th:text="${usuario.name}"></td>
+                            <td th:text="${usuario.email}"></td>
+                            <td>
+                                <span th:each="role : ${usuario.roles}" th:text="${role}">, </span>
+                            </td>
+                            <td th:text="${usuario.createdAt}"></td>
                             <td class="btn-group btn-group-sm">
-                                <form class="form" th:method="DELETE" th:action="@{/empresas/{id}(id=${empresa.id})}">
+                                <form class="form" th:method="DELETE" th:action="@{/usuarios/{id}(id=${usuario.id})}">
                                     <button th:text="Eliminar" class="btn btn-outline-danger btn-sm"></button>
                                 </form>
-                                <a th:href="@{empresas/editar/} + ${empresa.id}" th:text="Editar" class="btn btn-outline-secondary btn-sm"></a>
+                                <a th:href="@{usuarios/editar/} + ${usuario.id}" th:text="Editar" class="btn btn-outline-secondary btn-sm"></a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div th:unless="${enterprises.size()}" class="alert alert-warning mt-5">
-                    <h2 class="text-center">No existen empresas disponibles en base de datos</h2>
+                <div th:unless="${usuarios.size()}" class="alert alert-warning mt-5">
+                    <h2 class="text-center">No existen usuarios disponibles en base de datos</h2>
                 </div>
             </div>
         </div>

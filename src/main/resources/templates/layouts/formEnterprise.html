@@ -1,0 +1,28 @@
+<div th:fragment="formEnterprise" class="col-8">
+    <h1 class="text-center text-primary my-2" th:text="${tituloPrincipal}"></h1>
+    <div>
+        <form class="form" th:object="${empresa}" th:method="${method}" th:action="${method} == 'POST' ? @{/empresas/nueva} : @{/empresas/editar/{id}(id=*{id})}">
+            <div class="form-floating mt-3">
+                <input id="nameInput" type="text" th:field="*{name}" class="form-control" placeholder="Digita el nombre de la empresa..." required>
+                <label for="nameInput">Nombre</label>
+            </div>
+
+            <div class="form-floating mt-3">
+                <input id="documentInput" type="text" th:field="*{document}" class="form-control" placeholder="Digita el nit..." required>
+                <label for="documentInput">Documento</label>
+            </div>
+
+            <div class="form-floating mt-3">
+                <input id="phoneInput" type="text" th:field="*{phone}" class="form-control" placeholder="Digita el número de celular..."required>
+                <label for="phoneInput">Celular</label>
+            </div>
+
+            <div class="form-floating mt-3">
+                <input id="addressInput" type="text" th:field="*{address}" class="form-control" placeholder="Digita la dirección..." required>
+                <label for="addressInput">Dirección</label>
+            </div>
+
+            <button class="btn btn-success mt-3" th:text="${accion}"></button>
+        </form>
+    </div>
+</div>

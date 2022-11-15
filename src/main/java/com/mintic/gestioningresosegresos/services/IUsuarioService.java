@@ -13,6 +13,8 @@ public interface IUsuarioService {
 
     Usuario findById(Long id);
 
+    Usuario findByEmail(String email);
+
     Usuario save(Usuario usuario);
 
     Usuario update(Long id, Usuario usuario);

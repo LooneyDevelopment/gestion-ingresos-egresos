@@ -34,6 +34,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
+    public Usuario findByEmail(String email) { return usuarioDao.findByEmail(email); }
+
+    @Override
     public Usuario save(Usuario usuario) {
         usuario.setRoles(usuario.getRoles() != null ? usuario.getRoles() : Collections.singletonList(EnumRoleName.OPERARIO));
         return usuarioDao.save(usuario);

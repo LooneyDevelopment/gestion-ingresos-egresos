@@ -1,7 +1,8 @@
 package com.mintic.gestioningresosegresos.controllers.frontend;
 
-import com.mintic.gestioningresosegresos.models.entities.Enterprise;
-import com.mintic.gestioningresosegresos.services.IEnterpriseService;
+import com.mintic.gestioningresosegresos.models.entities.Usuario;
+import com.mintic.gestioningresosegresos.models.enums.EnumRoleName;
+import com.mintic.gestioningresosegresos.services.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -12,44 +13,46 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@RequestMapping("empresas")
+@RequestMapping("usuarios")
 @Controller
-public class FrontEndEnterpriseController {
+public class UsuarioController {
 
-    public String TITULO_EMPRESAS = "Sistemas de gestión de empresas";
+    public String TITULO_USUARIOS = "Sistemas de gestión de usuarios";
 
     @Autowired
-    IEnterpriseService enterpriseService;
+    IUsuarioService userService;
 
     @GetMapping
     public String viewHome(Model model) {
-        model.addAttribute("enterprises", enterpriseService.findAll());
-        return "empresas";
+        model.addAttribute("usuarios", userService.findAll());
+        model.addAttribute("title", "Usuarios");
+        return "usuarios";
     }
 
-    @GetMapping("{document}")
-    public String viewDetalleEmpresa(@PathVariable String document, Model model) {
-        model.addAttribute("enterprise", enterpriseService.findByDocument(document));
-        return "detalle-empresa";
+    @GetMapping("{email}")
+    public String viewDetalleUsuario(@PathVariable String email, Model model) {
+        model.addAttribute("user", userService.findByEmail(email));
+        return "detalle-usuario";
     }
 
-    @GetMapping("nueva")
-    public String getEnterpriseNueva(Model model, @ModelAttribute("empresa") Enterprise enterprise){
-        model.addAttribute("title", "Nueva empresa");
-        model.addAttribute("tituloPrincipal", TITULO_EMPRESAS);
-        model.addAttribute("accion", "Crear empresa");
+    @GetMapping("nuevo")
+    public String getUsuarioNuevo(Model model, @ModelAttribute("usuario") Usuario user){
+        model.addAttribute("title", "Nuevo usuario");
+        model.addAttribute("tituloPrincipal", TITULO_USUARIOS);
+        model.addAttribute("accion", "Crear usuario");
+        model.addAttribute("roles", EnumRoleName.values());
         model.addAttribute("method", "POST");
-        return "new-empresa";
+        return "new-usuario";
     }
 
-    @PostMapping("nueva")
-    public String postUsuario(@ModelAttribute("empresa") Enterprise enterprise, Model model){
-        enterprise.setCreatedAt(new Date());
-        enterprise.setUpdatedAt(new Date());
-        enterprise.setUsuarios(new ArrayList<>());
+    @PostMapping("nuevo")
+    public String postUsuario(@ModelAttribute("usuario") Usuario user, Model model){
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
         try {
-            enterpriseService.save(enterprise);
-            return "redirect:/empresas";
+            System.out.println(user);
+            userService.save(user);
+            return "redirect:/usuarios";
         } catch (DataAccessException e) {
             List<String> partsOfError = List.of(e.getMostSpecificCause().getLocalizedMessage().split(":"));
             String detail = partsOfError.get(2);
@@ -63,39 +66,36 @@ public class FrontEndEnterpriseController {
 
     @DeleteMapping("{id}")
     public String delete(@PathVariable Long id){
-        enterpriseService.delete(id);
-        return "redirect:/empresas";
+        userService.delete(id);
+        return "redirect:/usuarios";
     }
 
     @GetMapping("editar/{id}")
     public String update(Model model, @PathVariable Long id){
         try {
-            model.addAttribute("empresa", enterpriseService.findById(id));
-            model.addAttribute("title", "Editar empresa");
-            model.addAttribute("tituloPrincipal", TITULO_EMPRESAS);
-            model.addAttribute("accion", "Actualizar empresa");
+            model.addAttribute("usuario", userService.findById(id));
+            model.addAttribute("title", "Editar usuario");
+            model.addAttribute("tituloPrincipal", TITULO_USUARIOS);
+            model.addAttribute("accion", "Actualizar usuario");
+            model.addAttribute("roles", EnumRoleName.values());
             model.addAttribute("method", "PATCH");
-            return "editar-empresa";
+            return "new-usuario";
         } catch (Exception e) {
             return "redirect:/error";
         }
     }
 
     @PatchMapping("editar/{id}")
-    public String update(@ModelAttribute("updateEmpresa") Enterprise enterprise, @PathVariable Long id){
+    public String update(@ModelAttribute("updateUsuario") Usuario user, @PathVariable Long id){
         try {
-            enterpriseService.update(id, enterprise);
-            return "redirect:/empresas";
+            userService.update(id, user);
+            return "redirect:/usuarios";
         } catch (Exception e) {
             return "redirect:/error";
         }
 
     }
- /*   @DeleteMapping("/usuario/delete/front/{id}")
-    public String deleteUsuario(@PathVariable String id){
-        usuarioService.delete(id);
-        return "redirect:/welcome";
-    }
+ /*
 
     @GetMapping("/usuario/add")
     public String getAddUsuario(Model model){
