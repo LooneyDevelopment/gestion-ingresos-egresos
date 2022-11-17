@@ -1,7 +1,7 @@
 package com.mintic.gestioningresosegresos.controllers.backend;
 
-import com.mintic.gestioningresosegresos.models.entities.Usuario;
-import com.mintic.gestioningresosegresos.services.IUsuarioService;
+import com.mintic.gestioningresosegresos.models.entities.Empleado;
+import com.mintic.gestioningresosegresos.services.IEmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -17,32 +17,32 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("api/usuarios")
-public class UsuarioRestController {
+@RequestMapping("api/empleados")
+public class EmpleadoRestController {
     @Autowired
-    private IUsuarioService usuarioService;
+    private IEmpleadoService empleadoService;
 
     @GetMapping
-    public List<Usuario> listAll() {
-        return usuarioService.findAll();
+    public List<Empleado> listAll() {
+        return empleadoService.findAll();
     }
 
     @GetMapping("page/{page}")
-    public Page<Usuario> listAll(@PathVariable Integer page) {
+    public Page<Empleado> listAll(@PathVariable Integer page) {
         Pageable pageable = PageRequest.of(page, 5);
-        return usuarioService.findAll(pageable);
+        return empleadoService.findAll(pageable);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<?> listById(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
         try {
-            Usuario usuario = usuarioService.findById(id);
-            if (usuario == null) {
-                response.put("mensaje", "El usuario con id ".concat(id.toString()).concat(" no existe en base de datos"));
+            Empleado empleado = empleadoService.findById(id);
+            if (empleado == null) {
+                response.put("mensaje", "El empleado con id ".concat(id.toString()).concat(" no existe en base de datos"));
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(usuario, HttpStatus.OK);
+            return new ResponseEntity<>(empleado, HttpStatus.OK);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar la consulta en base de datos");
             response.put("error", Objects.requireNonNull(e.getMostSpecificCause().getMessage()));
@@ -51,12 +51,12 @@ public class UsuarioRestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> create(@RequestBody Empleado empleado) {
         Map<String, Object> response = new HashMap<>();
         try {
-            usuario = usuarioService.save(usuario);
-            response.put("mensaje", "El usuario ha sido creada con éxito!");
-            response.put("usuario", usuario);
+            empleado = empleadoService.save(empleado, empleado.getEnterprise().getNit());
+            response.put("mensaje", "El empleado ha sido creada con éxito!");
+            response.put("empleado", empleado);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (DataAccessException e) {
             response.put("mensaje", "Error al realizar el insert en base de datos");
@@ -66,19 +66,19 @@ public class UsuarioRestController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<?> update(@RequestBody Usuario usuario, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody Empleado empleado, @PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
         try {
-            usuario = usuarioService.update(id, usuario);
-            if (usuario == null) {
-                response.put("mensaje", "El usuario que desea editar, con id ".concat(id.toString().concat(" no existe en base de datos!")));
+            empleado = empleadoService.update(id, empleado, empleado.getEnterprise().getNit());
+            if (empleado == null) {
+                response.put("mensaje", "El empleado que desea editar, con id ".concat(id.toString().concat(" no existe en base de datos!")));
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
-            response.put("mensaje", "El usuario ha sido actualizado con éxito!");
-            response.put("cliente", usuario);
+            response.put("mensaje", "El empleado ha sido actualizado con éxito!");
+            response.put("cliente", empleado);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (DataAccessException e) {
-            response.put("mensaje", "Error al actaulizar usuario en base de datos");
+            response.put("mensaje", "Error al actaulizar empleado en base de datos");
             response.put("error", Objects.requireNonNull(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -88,14 +88,14 @@ public class UsuarioRestController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
         try {
-            if (!usuarioService.delete(id)) {
-                response.put("mensaje", "El usuario que desea eliminar, con id ".concat(id.toString().concat(" no existe en base de datos!")));
+            if (!empleadoService.delete(id)) {
+                response.put("mensaje", "El empleado que desea eliminar, con id ".concat(id.toString().concat(" no existe en base de datos!")));
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
-            response.put("mensaje", "El usuario ha sido eliminado con éxito!");
+            response.put("mensaje", "El empleado ha sido eliminado con éxito!");
             return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
         } catch (DataAccessException e) {
-            response.put("mensaje", "Error al eliminar usuario en base de datos");
+            response.put("mensaje", "Error al eliminar empleado en base de datos");
             response.put("error", Objects.requireNonNull(e.getMessage()).concat(": ".concat(e.getMostSpecificCause().getMessage())));
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }

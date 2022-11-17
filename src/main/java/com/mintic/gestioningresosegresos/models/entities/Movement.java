@@ -22,7 +22,7 @@ public class Movement {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = {"employees", "hibernateLazyInitializer", "handler"}, allowSetters = true)
-    private Usuario usuario;
+    private Empleado empleado;
 
     @Column(name = "create_at", nullable = false)
     @Temporal(TemporalType.DATE)

@@ -32,8 +32,8 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
     }
 
     @Override
-    public Enterprise findByDocument(String document) {
-        return enterpriseDao.findByDocument(document);
+    public Enterprise findByNit(String nit) {
+        return enterpriseDao.findByNit(nit);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
     public Enterprise update(Long id, Enterprise enterprise) {
         Enterprise enterpriseFound = findById(id);
         if (enterpriseFound != null) {
-            enterpriseFound.setDocument(enterprise.getDocument() != null ? enterprise.getDocument() : enterpriseFound.getDocument());
+            enterpriseFound.setNit(enterprise.getNit() != null ? enterprise.getNit() : enterpriseFound.getNit());
             enterpriseFound.setAddress(enterprise.getAddress() != null ? enterprise.getAddress() : enterpriseFound.getAddress());
             enterpriseFound.setName(enterprise.getName() != null ? enterprise.getName() : enterpriseFound.getName());
             enterpriseFound.setPhone(enterprise.getPhone() != null ? enterprise.getPhone() : enterpriseFound.getPhone());

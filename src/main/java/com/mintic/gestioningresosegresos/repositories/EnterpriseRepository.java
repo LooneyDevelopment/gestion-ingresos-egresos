@@ -4,5 +4,5 @@ import com.mintic.gestioningresosegresos.models.entities.Enterprise;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EnterpriseRepository extends JpaRepository<Enterprise, Long> {
-    Enterprise findByDocument(String document);
+    Enterprise findByNit(String nit);
 }

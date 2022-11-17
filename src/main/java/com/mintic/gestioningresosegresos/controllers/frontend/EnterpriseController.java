@@ -28,9 +28,9 @@ public class EnterpriseController {
         return "empresas";
     }
 
-    @GetMapping("{document}")
-    public String viewDetalleEmpresa(@PathVariable String document, Model model) {
-        model.addAttribute("enterprise", enterpriseService.findByDocument(document));
+    @GetMapping("{nit}")
+    public String viewDetalleEmpresa(@PathVariable String nit, Model model) {
+        model.addAttribute("enterprise", enterpriseService.findByNit(nit));
         return "detalle-empresa";
     }
 
@@ -44,10 +44,10 @@ public class EnterpriseController {
     }
 
     @PostMapping("nueva")
-    public String postUsuario(@ModelAttribute("empresa") Enterprise enterprise, Model model){
+    public String postEmpleado(@ModelAttribute("empresa") Enterprise enterprise, Model model){
         enterprise.setCreatedAt(new Date());
         enterprise.setUpdatedAt(new Date());
-        enterprise.setUsuarios(new ArrayList<>());
+        enterprise.setEmpleados(new ArrayList<>());
         try {
             enterpriseService.save(enterprise);
             return "redirect:/empresas";
@@ -92,41 +92,41 @@ public class EnterpriseController {
         }
 
     }
- /*   @DeleteMapping("/usuario/delete/front/{id}")
-    public String deleteUsuario(@PathVariable String id){
-        usuarioService.delete(id);
+ /*   @DeleteMapping("/empleado/delete/front/{id}")
+    public String deleteEmpleado(@PathVariable String id){
+        empleadoService.delete(id);
         return "redirect:/welcome";
     }
 
-    @GetMapping("/usuario/add")
-    public String getAddUsuario(Model model){
+    @GetMapping("/empleado/add")
+    public String getAddEmpleado(Model model){
 
-        model.addAttribute("newUsuario",new Usuario());
+        model.addAttribute("newEmpleado",new Empleado());
         model.addAttribute("perfiles",perfilService.getPefiles());
         model.addAttribute("roles", Rol.values());
 
-        return "add-user";
+        return "add-empleado";
     }
 
-    @GetMapping("/usuario/update/front/{id}")
-    public String getUsuario(Model model, @PathVariable String id){
+    @GetMapping("/empleado/update/front/{id}")
+    public String getEmpleado(Model model, @PathVariable String id){
 
         try {
-            model.addAttribute("UpdateUsuario",usuarioService.getUsuario(id));
+            model.addAttribute("UpdateEmpleado",empleadoService.getEmpleado(id));
             model.addAttribute("perfiles",perfilService.getPefiles());
             model.addAttribute("roles", Rol.values());
-            return "update-user";
+            return "update-empleado";
         } catch (Exception e) {
             return "redirect:/error";
         }
 
     }
 
-    @PatchMapping("/usuario/front/{id}")
-    public String patchUsuario(@ModelAttribute("UpdateUsuario") Usuario usuario, @PathVariable String id){
+    @PatchMapping("/empleado/front/{id}")
+    public String patchEmpleado(@ModelAttribute("UpdateEmpleado") Empleado empleado, @PathVariable String id){
 
         try {
-            usuarioService.patchUsuario(usuario,id);
+            empleadoService.patchEmpleado(empleado,id);
             return "redirect:/welcome";
         } catch (Exception e) {
             return "redirect:/error";
@@ -134,10 +134,10 @@ public class EnterpriseController {
 
     }
 
-    @PostMapping("/usuario/front")
-    public String postUsuario(@ModelAttribute("newUsuario") Usuario usuario){
+    @PostMapping("/empleado/front")
+    public String postEmpleado(@ModelAttribute("newEmpleado") Empleado empleado){
 
-        usuarioService.saveUsuario(usuario);
+        empleadoService.saveEmpleado(empleado);
 
         return "redirect:/welcome";
     }

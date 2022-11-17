@@ -11,42 +11,46 @@
                 <div class="row pb-2">
                     <h1 class="text-center text-info">Sistema de gestión de Ingresos y Gastos</h1>
                     <div class="d-flex justify-content-between">
-                        <h2 class="border-bottom border-dark pb-1">Usuarios</h2>
-                        <a href="usuarios/nuevo" class="btn btn-success text-center">Nuevo usuario</a>
+                        <h2 class="border-bottom border-dark pb-1">Empleados</h2>
+                        <a href="empleados/nuevo" class="btn btn-success text-center">Nuevo empleado</a>
                     </div>
                 </div>
 
                 <div class="row table-responsive">
-                    <table class="table" th:if="${usuarios.size()}">
+                    <table class="table" th:if="${empleados.size()}">
                         <thead>
                         <tr class="text-success">
                             <th scope="col">Nombre</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Empresa</th>
                             <th scope="col">Roles</th>
                             <th scope="col">Fecha creación</th>
                             <th scope="col">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="usuario : ${usuarios}">
-                            <td th:text="${usuario.name}"></td>
-                            <td th:text="${usuario.email}"></td>
+                        <tr th:each="empleado : ${empleados}">
+                            <td th:text="${empleado.name}"></td>
+                            <td th:text="${empleado.email}"></td>
+                            <td th:text="${empleado.enterprise.name}"></td>
                             <td>
-                                <span th:each="role : ${usuario.roles}" th:text="${role}">, </span>
+                                <span th:each="role : ${empleado.roles}"
+                                      th:text="${role.ordinal()} < ${empleado.roles.size() - 1} ? ${role} + ', ' : ${role}">
+                                </span>
                             </td>
-                            <td th:text="${usuario.createdAt}"></td>
+                            <td th:text="${empleado.createdAt}"></td>
                             <td class="btn-group btn-group-sm">
-                                <form class="form" th:method="DELETE" th:action="@{/usuarios/{id}(id=${usuario.id})}">
+                                <form class="form" th:method="DELETE" th:action="@{/empleados/{id}(id=${empleado.id})}">
                                     <button th:text="Eliminar" class="btn btn-outline-danger btn-sm"></button>
                                 </form>
-                                <a th:href="@{usuarios/editar/} + ${usuario.id}" th:text="Editar" class="btn btn-outline-secondary btn-sm"></a>
+                                <a th:href="@{empleados/editar/} + ${empleado.id}" th:text="Editar" class="btn btn-outline-secondary btn-sm"></a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div th:unless="${usuarios.size()}" class="alert alert-warning mt-5">
-                    <h2 class="text-center">No existen usuarios disponibles en base de datos</h2>
+                <div th:unless="${empleados.size()}" class="alert alert-warning mt-5">
+                    <h2 class="text-center">No existen empleados disponibles en base de datos</h2>
                 </div>
             </div>
         </div>

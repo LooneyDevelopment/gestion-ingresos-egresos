@@ -14,7 +14,7 @@ public interface IEnterpriseService {
 
     Enterprise findById(Long id);
 
-    Enterprise findByDocument(String document);
+    Enterprise findByNit(String nit);
 
     Enterprise save(Enterprise enterprise);
 

@@ -1,10 +1,10 @@
-<div th:fragment="formUsuario" class="col-8">
+<div th:fragment="formEmpleado" class="col-8">
     <h1 class="text-center text-primary my-2" th:text="${tituloPrincipal}"></h1>
     <div>
-        <form class="form" th:object="${usuario}" th:method="${method}" th:action="${method} == 'POST' ? @{/usuarios/nuevo} : @{/usuarios/editar/{id}(id=*{id})}">
+        <form class="form" th:object="${empleado}" th:method="${method}" th:action="${method} == 'POST' ? @{/empleados/nuevo} : @{/empleados/editar/{id}(id=*{id})}">
 
             <div class="form-floating mt-3">
-                <input id="nameInput" type="text" th:field="*{name}" class="form-control" placeholder="Digita el nombre del usuario..." required>
+                <input id="nameInput" type="text" th:field="*{name}" class="form-control" placeholder="Digita el nombre del empleado..." required>
                 <label for="nameInput">Nombre</label>
             </div>
 
@@ -22,7 +22,10 @@
                 />
                 <label th:for="${role}" class="form-check-label" th:text="${role}"></label>
             </div>
-            <button class="btn btn-success mt-3" th:text="${accion}"></button>
+            <select th:field="*{nitEmpresa}">
+                <option th:each="empresa : ${empresas}" th:value="${empresa.nit}" th:text="${empresa.name}"></option>
+            </select>
+            <button type="submit" class="btn btn-success mt-3" th:text="${accion}"></button>
         </form>
     </div>
 </div>

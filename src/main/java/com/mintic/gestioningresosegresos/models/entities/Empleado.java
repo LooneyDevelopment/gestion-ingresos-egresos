@@ -10,8 +10,8 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "usuarios")
-public class Usuario {
+@Table(name = "empleados")
+public class Empleado {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -40,7 +40,7 @@ public class Usuario {
     private List<EnumRoleName> roles;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = {"usuarios", "hibernateLazyInitializer", "handler"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"empleados", "hibernateLazyInitializer", "handler"}, allowSetters = true)
     private Enterprise enterprise;
 
  /*   @OneToOne(mappedBy = "employee")

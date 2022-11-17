@@ -18,7 +18,7 @@ public class Enterprise {
     @Column(nullable = false, unique = true)
     private String name;
     @Column(nullable = false, unique = true)
-    private String document;
+    private String nit;
     @Column(nullable = false)
     private String phone;
     @Column(nullable = false)
@@ -26,7 +26,7 @@ public class Enterprise {
 
     @JsonIgnoreProperties(value = {"enterprise", "hibernateLazyInitializer", "handler"}, allowSetters = true)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "enterprise", cascade = CascadeType.ALL)
-    private List<Usuario> usuarios;
+    private List<Empleado> empleados;
 
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)
