@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 @RequestMapping("empresas")
@@ -47,7 +48,7 @@ public class EnterpriseController {
     public String postEmpleado(@ModelAttribute("empresa") Enterprise enterprise, Model model){
         enterprise.setCreatedAt(new Date());
         enterprise.setUpdatedAt(new Date());
-        enterprise.setEmpleados(new ArrayList<>());
+        enterprise.setEmpleados(new HashSet<>());
         try {
             enterpriseService.save(enterprise);
             return "redirect:/empresas";

@@ -1,11 +1,13 @@
 package com.mintic.gestioningresosegresos.controllers.frontend;
 
 import com.mintic.gestioningresosegresos.models.dtos.EmpleadoDto;
+import com.mintic.gestioningresosegresos.models.dtos.EnterpriseDto;
 import com.mintic.gestioningresosegresos.models.entities.Empleado;
 import com.mintic.gestioningresosegresos.models.entities.Enterprise;
 import com.mintic.gestioningresosegresos.models.enums.EnumRoleName;
 import com.mintic.gestioningresosegresos.services.IEmpleadoService;
 import com.mintic.gestioningresosegresos.services.IEnterpriseService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequestMapping("empleados")
 @Controller
@@ -91,8 +94,12 @@ public class EmpleadoController {
     @GetMapping("editar/{id}")
     public String update(Model model, @PathVariable Long id){
         try {
-            model.addAttribute("empresas", enterpriseService.findAll());
-            model.addAttribute("empleado", empleadoService.findById(id));
+            ModelMapper modelMapper = new ModelMapper();
+            EmpleadoDto empleadoDto = crearEmpleadoDto(empleadoService.findById(id));
+            List<Enterprise> empresas = enterpriseService.findAll();
+            List<EnterpriseDto> empresasDto = empresas.stream().map(e -> modelMapper.map(e, EnterpriseDto.class)).collect(Collectors.toList());
+            model.addAttribute("empresas", empresasDto);
+            model.addAttribute("empleado", empleadoDto);
             model.addAttribute("title", "Editar empleado");
             model.addAttribute("tituloPrincipal", TITULO_EMPLEADOS);
             model.addAttribute("accion", "Actualizar empleado");
@@ -104,10 +111,20 @@ public class EmpleadoController {
         }
     }
 
+    private EmpleadoDto crearEmpleadoDto(Empleado empleado) {
+        EmpleadoDto empleadoDto = new EmpleadoDto();
+        empleadoDto.setName(empleado.getName());
+        empleadoDto.setEmail(empleado.getEmail());
+        empleadoDto.setNitEmpresa(empleado.getEnterprise().getNit());
+        empleadoDto.setRoles(empleado.getRoles());
+        empleadoDto.setId(empleado.getId());
+        return empleadoDto;
+    }
+
     @PatchMapping("editar/{id}/empresa/{nit}")
-    public String update(@ModelAttribute("updateEmpleado") Empleado empleado, @PathVariable Long id, @PathVariable String nit){
+    public String update(@ModelAttribute("updateEmpleado") EmpleadoDto empleadoDto, @PathVariable Long id, @PathVariable String nit){
         try {
-            empleadoService.update(id, empleado, nit);
+            empleadoService.update(id, crearEmpleado(empleadoDto), empleadoDto.getNitEmpresa());
             return "redirect:/empleados";
         } catch (Exception e) {
             return "redirect:/error";

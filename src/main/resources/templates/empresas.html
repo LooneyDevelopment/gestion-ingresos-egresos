@@ -19,7 +19,8 @@
                 <div class="row table-responsive">
                     <table class="table" th:if="${enterprises.size()}">
                         <thead>
-                        <tr class="text-success">
+                        <tr class="text-success text-center">
+                            <th scope="col"># Empleados</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Nit</th>
                             <th scope="col">Dirección</th>
@@ -28,7 +29,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="empresa : ${enterprises}">
+                        <tr th:each="empresa : ${enterprises}" class="text-center">
+                            <td th:text="${empresa.empleados.size()}"></td>
                             <td th:text="${empresa.name}"></td>
                             <td th:text="${empresa.nit}"></td>
                             <td th:text="${empresa.address}"></td>

@@ -45,7 +45,7 @@ public class EmpleadoServiceImpl implements IEmpleadoService {
     public Empleado save(Empleado empleado, String nitEmpresa) {
         empleado.setEnterprise(enterpriseService.findByNit(nitEmpresa));
         empleado.setRoles(empleado.getRoles() != null ? empleado.getRoles() : Collections.singletonList(EnumRoleName.OPERARIO));
-        return empleadoDao.save(empleado);
+        return empleadoDao.saveAndFlush(empleado);
     }
 
     @Override
