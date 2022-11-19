@@ -38,7 +38,7 @@ public class EnterpriseServiceImpl implements IEnterpriseService {
 
     @Override
     public Enterprise save(Enterprise enterprise) {
-        return enterpriseDao.save(enterprise);
+        return enterpriseDao.saveAndFlush(enterprise);
     }
 
     @Override

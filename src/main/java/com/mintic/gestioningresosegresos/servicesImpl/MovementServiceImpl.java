@@ -33,7 +33,7 @@ public class MovementServiceImpl implements IMovementService {
 
     @Override
     public Movement save(Movement movement) {
-        return movementDao.save(movement);
+        return movementDao.saveAndFlush(movement);
     }
 
     @Override

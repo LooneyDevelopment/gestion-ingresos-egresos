@@ -1,7 +1,7 @@
 <div th:fragment="formEmpleado" class="col-8">
     <h1 class="text-center text-primary my-2" th:text="${tituloPrincipal}"></h1>
     <div>
-        <form class="form" th:object="${empleado}" th:method="${method}" th:action="${method} == 'POST' ? @{/empleados/nuevo} : @{/empleados/editar/{id}(id=*{id})}">
+        <form class="form" th:object="${empleado}" th:method="${method}" th:action="${method} == 'POST' ? @{/empleados/nuevo} : @{/empleados/editar/{id}(id=*{id})} + @{/empresa/{nit}(nit=*{nitEmpresa})}">
 
             <div class="form-floating mt-3">
                 <input id="nameInput" type="text" th:field="*{name}" class="form-control" placeholder="Digita el nombre del empleado..." required>
@@ -13,19 +13,26 @@
                 <label for="emailInput">Email</label>
             </div>
 
-            <label for="roles" class="mt-3">Roles</label>
-            <div th:each="role : ${roles}" class="form-check form-switch mt-3" id="roles">
-                <input type="checkbox" class="form-check-input" role="switch"
-                       th:id="${role}"
-                       th:value="${role}"
-                       th:field="*{roles}"
-                />
-                <label th:for="${role}" class="form-check-label" th:text="${role}"></label>
+            <div class="row">
+                <div class="col-6">
+                    <label for="roles" class="mt-3">Roles</label>
+                    <div th:each="role : ${roles}" class="form-check form-switch mt-3" id="roles">
+                        <input type="checkbox" class="form-check-input" role="switch"
+                               th:id="${role}"
+                               th:value="${role}"
+                               th:field="*{roles}"
+                        />
+                        <label th:for="${role}" class="form-check-label" th:text="${role}"></label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label for="empresas" class="mt-3">Empresa</label>
+                    <select th:field="*{nitEmpresa}" class="form-select mt-3" id="empresas">
+                        <option th:each="empresa : ${empresas}" th:value="${empresa.nit}" th:text="${empresa.name}"></option>
+                    </select>
+                </div>
             </div>
-            <select th:field="*{nitEmpresa}">
-                <option th:each="empresa : ${empresas}" th:value="${empresa.nit}" th:text="${empresa.name}"></option>
-            </select>
-            <button type="submit" class="btn btn-success mt-3" th:text="${accion}"></button>
+            <button type="submit" class="btn btn-success mt-3 float-right" th:text="${accion}"></button>
         </form>
     </div>
 </div>

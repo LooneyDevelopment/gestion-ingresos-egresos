@@ -2,12 +2,16 @@ package com.mintic.gestioningresosegresos.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "enterprises")
 public class Enterprise {
@@ -26,7 +30,7 @@ public class Enterprise {
 
     @JsonIgnoreProperties(value = {"enterprise", "hibernateLazyInitializer", "handler"}, allowSetters = true)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "enterprise", cascade = CascadeType.ALL)
-    private List<Empleado> empleados;
+    private Set<Empleado> empleados;
 
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)

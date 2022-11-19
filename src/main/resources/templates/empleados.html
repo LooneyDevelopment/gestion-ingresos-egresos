@@ -19,7 +19,7 @@
                 <div class="row table-responsive">
                     <table class="table" th:if="${empleados.size()}">
                         <thead>
-                        <tr class="text-success">
+                        <tr class="text-success text-center">
                             <th scope="col">Nombre</th>
                             <th scope="col">Email</th>
                             <th scope="col">Empresa</th>
@@ -29,7 +29,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="empleado : ${empleados}">
+                        <tr th:each="empleado : ${empleados}" class="text-center">
                             <td th:text="${empleado.name}"></td>
                             <td th:text="${empleado.email}"></td>
                             <td th:text="${empleado.enterprise.name}"></td>
